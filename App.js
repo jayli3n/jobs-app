@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { Provider } from 'react-redux';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import store from './store';
 import AuthScreen from './screens/auth';
 import WelcomeScreen from './screens/welcome';
 import MapScreen from './screens/map';
@@ -29,10 +31,16 @@ class App extends Component {
           }
         })
       })
+    }, {
+      navigationOptions: {
+        tabBarVisible: false
+      }
     }));
 
     return (
-      <MainNavigator />
+      <Provider store={store}>
+        <MainNavigator />
+      </Provider>
     );
   }
 }

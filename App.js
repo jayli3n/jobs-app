@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Provider } from 'react-redux';
+import { SafeAreaView } from 'react-navigation';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import store from './store';
 import AuthScreen from './screens/auth';
@@ -39,7 +40,9 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <MainNavigator />
+        <SafeAreaView style={{flex: 1}}>
+          <MainNavigator />
+        </SafeAreaView>
       </Provider>
     );
   }

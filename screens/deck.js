@@ -1,19 +1,54 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, MapView } from 'react-native';
+import { Card, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
+import Swipe from '../components/swipe';
 
 class DeckScreen extends Component {
+	renderCard(job) {
+		const { jobkey, jobtitle, company, formattedRelativeTime, snippet, longitude, latitude } = job;
+		<Card title={jobtitle} key={jobkey}>
+			<View style={{ height: 300 }}>
+				<MapView 
+					style={{ flex: 1 }}
+					scrollEnabled={false}
+					cacheEnabled={true}
+					initialRegion={ {longitude, latitude, longitudeDelta: 0.045, latitudeDelta: 0.02 }}
+				>
+				</MapView>
+			</View>
+			<View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+				<Text>{company}</Text>
+				<Text>{formattedRelativeTime}</Text>
+			</View>
+			<Text>{snippet.replace(/<b>/g, '').replace(/<\/b/,'')}</Text>
+		</Card>
+	}
+
+	renderNoMoreCards() {
+		return (
+			<Card title='No more jobs'>
+			</Card>
+		)
+	}
+
 	render() {
 		return (
 			<View>
-				<Text>Deck Screen</Text>
-				<Text>Deck Screen</Text>
-				<Text>Deck Screen</Text>
-				<Text>Deck Screen</Text>
-				<Text>Deck Screen</Text>
-				<Text>Deck Screen</Text>
+				<Swipe 
+					data={this.props.jobs}
+					renderCard={this.renderCard}
+					renderNoMoreCards={this.renderNoMoreCards}
+				/>
 			</View>
 		)
 	}
 }
 
-export default DeckScreen;
+const mapStateToStates = ({ jobs }) => {
+	return {
+		jobs: jobs.results
+	}
+}
+
+export default connect(mapStateToStates)(DeckScreen);

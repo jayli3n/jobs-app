@@ -3,11 +3,12 @@ import { View, Text, MapView } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import Swipe from '../components/swipe';
+import { likeJob } from '../actions';
 
 class DeckScreen extends Component {
 	renderCard(job) {
 		const { jobkey, jobtitle, company, formattedRelativeTime, snippet, longitude, latitude } = job;
-		<Card title={jobtitle} key={jobkey}>
+		<Card title={jobtitle} >
 			<View style={{ height: 300 }}>
 				<MapView 
 					style={{ flex: 1 }}
@@ -39,6 +40,7 @@ class DeckScreen extends Component {
 					data={this.props.jobs}
 					renderCard={this.renderCard}
 					renderNoMoreCards={this.renderNoMoreCards}
+					onSwipeRight={job => this.props.likeJob(job)}
 				/>
 			</View>
 		)
@@ -51,4 +53,4 @@ const mapStateToStates = ({ jobs }) => {
 	}
 }
 
-export default connect(mapStateToStates)(DeckScreen);
+export default connect(mapStateToStates, { likeJob })(DeckScreen);

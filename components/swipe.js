@@ -108,7 +108,7 @@ class Swipe extends Component {
 				if (index === this.state.index) {
 					return (
 						<Animated.View
-							key={item.id}style={[this.getCardStyle(), styles.cardStyle, {zIndex: index * -1}]}
+							key={item.jobkey} style={[this.getCardStyle(), styles.cardStyle, {zIndex: index * -1}]}
 							
 							{...this.panResponder.panHandlers}
 						>
@@ -118,7 +118,7 @@ class Swipe extends Component {
 				} else if (index > this.state.index) {
 					return <Animated.View 
 								style={[styles.cardStyle, {zIndex: index * -1}, {top: 10*(index - this.state.index)}]}
-								key={item.id}
+								key={item.jobkey}
 							>
 								{renderCard(item)}
 							</Animated.View>

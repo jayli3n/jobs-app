@@ -2,7 +2,8 @@ import axios from 'axios';
 import reverseGeoCode from 'latlng-to-zip';
 import qs from 'qs';
 import {
-	FETCH_JOBS
+	FETCH_JOBS,
+	LIKE_JOB
 } from './types';
 
 // Indeed API: 4201738803816157
@@ -37,3 +38,10 @@ export const fetchJobs = (region, callback) => {
 		}
 	}
 };
+
+export const likeJob = (job) => {
+	return {
+		type: LIKE_JOB,
+		payload: job
+	}
+}

@@ -3,7 +3,8 @@ import reverseGeoCode from 'latlng-to-zip';
 import qs from 'qs';
 import {
 	FETCH_JOBS,
-	LIKE_JOB
+	LIKE_JOB,
+	CLEAR_LIKED_JOBS
 } from './types';
 
 // Indeed API: 4201738803816157
@@ -43,5 +44,11 @@ export const likeJob = (job) => {
 	return {
 		type: LIKE_JOB,
 		payload: job
+	}
+}
+
+export const clearLikedJobs = () => {
+	return {
+		type: CLEAR_LIKED_JOBS
 	}
 }

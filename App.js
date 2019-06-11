@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Provider } from 'react-redux';
-import { SafeAreaView } from 'react-navigation';
-import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements';
+import { createAppContainer, SafeAreaView, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import store from './store';
 import AuthScreen from './screens/auth';
 import WelcomeScreen from './screens/welcome';
@@ -17,15 +17,35 @@ class App extends Component {
       welcome: WelcomeScreen,
       auth: AuthScreen,
       main: createBottomTabNavigator({
-        map: MapScreen,
-        deck: DeckScreen,
+        map: {
+          screen: MapScreen,
+          navigationOptions: {
+            tabBarLabel: 'Map',
+            tabBarIcon: ({ tintColor }) => {
+              return <Icon name='my-location' size={25} color={tintColor} />
+            }
+          }
+        },
+        deck: {
+          screen: DeckScreen,
+          navigationOptions: {
+            tabBarLabel: 'Deck',
+            tabBarIcon: ({ tintColor }) => {
+              return <Icon name='description' size={25} color={tintColor} />
+            }
+          }
+        },
         review: createStackNavigator({
           review: {
             screen: ReviewScreen,
+            tabBarLabel: 'Review',
             navigationOptions: ({ navigation }) => ({
               headerTitle: 'Review Jobs',
               headerRight: <Button title='Settings' onPress={() => navigation.navigate('settings')} />
-            })
+            }),
+            tabBarIcon: ({ tintColor }) => {
+              return <Icon name='star' size={25} color={tintColor} />
+            }
           },
           settings: {
             screen: SettingsScreen

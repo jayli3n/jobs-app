@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { Expo, Notifications } from 'expo';
+import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import { Provider } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import { createAppContainer, SafeAreaView, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
@@ -10,8 +11,25 @@ import MapScreen from './screens/map';
 import DeckScreen from './screens/deck';
 import ReviewScreen from './screens/review';
 import SettingsScreen from './screens/settings';
+import registerForPush from './services/push';
 
 class App extends Component {
+  componentDidMount() {
+    registerForPush();
+    Notifications.addListener((notification) => {
+      const text = notification.data.text;
+      const origin = notification.origin;
+
+      if(origin === 'received' && text){
+        Alert.alert(
+          'New Push Notification Msg',
+          text,
+          [{ text: 'OK.' }]
+        );
+      }
+    })
+  }
+
   render(){
     const MainNavigator = createAppContainer(createBottomTabNavigator({
       welcome: WelcomeScreen,
